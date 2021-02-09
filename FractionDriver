@@ -1,0 +1,18 @@
+public class Fraction_Driver{
+   public static void main (String[] args){
+       Fraction myFraction = new Fraction(2,3);
+       Fraction yourFraction=new Fraction(1,1);
+       
+       //System.out.print(Fraction.denom);
+       
+       Fraction half= new Fraction (1,2);
+       System.out.println(half);
+       Fraction third  = new Fraction (1,5);
+       Fraction fourth = new Fraction (1,6);
+       System.out.println(third);
+       Fraction produce = Fraction.subtract(half, third);
+       System.out.println(produce);
+       
+       
+    }
+}
