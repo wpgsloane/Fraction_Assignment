@@ -1,0 +1,137 @@
+class Fraction {
+    //instance variables/fields
+    public int num, denom;//driver cant change value of ints
+
+     private Fraction(){
+        this.num=1;
+        this.denom=1;
+    }
+
+    public Fraction(int num, int denom){
+        this.num=num;
+        if (denom==0){
+            System.out.println("Error: Denominator was zero. Setting denominator to one");
+            this.denom=1;
+        } else{
+            this.denom=denom;
+        }
+    }
+
+    public Fraction(String Fraction){
+        int slashIndex=Fraction.indexOf("/");
+        String num = Fraction.substring(0,slashIndex);
+        String denom = Fraction.substring(slashIndex+1);
+        this.num=Integer.parseInt(num);
+
+        int tempDenom=Integer.parseInt(denom);
+        if (tempDenom==0){
+            System.out.println("Error: Denominator was zero. Setting denominator to one");
+            this.denom=1;
+        } else{
+            this.denom=tempDenom;  
+        }
+    }
+
+    public Fraction(Fraction f){
+        //copies values of num/denom
+        this.num=f.num;
+        this.denom=f.denom;
+        //this refers to fraction that is currently being created 
+        //(regardless of name)
+    }
+    //Accessor methods
+    public int getNum(){
+        return this.num;
+    }
+
+    public int getDenom(){
+        return this.denom;
+    }
+
+    public String toString(){
+        return this.num + "/" + this.denom;
+    }
+
+    public double getDouble(){
+        return (double) (this.num/this.denom);
+    }
+
+    //mutator methods
+    public void reduce(){
+        int gcd=gcd(this.num,this.denom);
+        this.num=this.num/gcd;
+        this.denom=this.denom/gcd;
+    }
+
+    public void setNum(int num){
+        this.num=num;
+    }
+
+    public void setDenom(int denom){
+        if (denom!=0){
+            this.denom=denom;
+        } else{
+            System.out.println("Error: Denominator was zero. Setting denominator to one");
+            this.denom=1;  
+        }
+    }
+
+    //static methods
+    public static Fraction multiply(Fraction a, Fraction b){
+        int newNum= (a.num*b.num);
+
+        int newDenom= (a.denom*b.denom);
+        //System.out.println(newDenom);
+        Fraction f = new Fraction(newNum, newDenom);
+        //System.out.println(f);
+        f.reduce();
+        //System.out.println(f);
+        return f;
+    }
+
+    public static Fraction divide(Fraction a, Fraction b){
+        if (b.num==0){
+            System.out.print("Error! Invalid Fraction"); 
+            return new Fraction();
+        } else{
+            int newNum = (a.num*b.denom);
+            int newDenom = (a.denom*b.num);
+            Fraction f= new Fraction (newNum, newDenom);
+            f.reduce();
+            return f;
+        }
+    }
+
+    public static Fraction add(Fraction a, Fraction b){
+        int newNum=(a.num*b.denom) + (b.num*a.denom);
+        int newDenom=(a.denom*b.denom);
+        Fraction f=new Fraction (newNum, newDenom);
+        f.reduce();
+        return f;
+    }
+
+    public static Fraction subtract(Fraction a, Fraction b){
+        int newNum = (a.num*b.denom) - (b.num*a.denom);
+        int newDenom = (a.denom*b.denom);
+        Fraction f = new Fraction (newNum, newDenom);
+        f.reduce();
+        return f;
+    }
+
+    //Helper Methods
+    public int gcd(int a, int b) {
+        //calculates and returns the GCF between two number
+        a = Math.abs(a);
+        b = Math.abs(b);
+        if (a == 0 || b == 0){
+            return 1;
+        }
+        while (a != b){
+            if (a > b)
+                a = a - b;
+            else
+                b = b - a;
+        }
+        return a;
+    }
+}
